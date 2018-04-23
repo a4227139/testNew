@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redis.personInfoMapper">
+    <select id="getPersonInfo" parameterType="string"  resultType="com.redis.PersonInfoVO">
+        select * from personInfo where id=#{id}
+    </select>
+    
+    <insert id="batchInsertPersonInfo"  parameterType="java.util.List">  
+	    insert into personInfo (Name,CardNo,Descriot,CtfTp,CtfId,Gender,Birthday,Address,Zip,Dirty,District1,District2,District3,District4,District5,District6,FirstNm,LastNm,Duty,Mobile,Tel,Fax,EMail,Nation,Taste,Education,Company,CTel,CAddress,CZip,Family,Version,id)   
+	    values  
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (
+	        #{item.Name},#{item.CardNo},#{item.Descriot},#{item.CtfTp},#{item.CtfId},#{item.Gender},#{item.Birthday},#{item.Address},
+	        #{item.Zip},#{item.Dirty},#{item.District1},#{item.District2},#{item.District3},#{item.District4},#{item.District5},#{item.District6},
+	        #{item.FirstNm},#{item.LastNm},#{item.Duty},#{item.Mobile},#{item.Tel},#{item.Fax},#{item.EMail},#{item.Nation},#{item.Taste},
+	        #{item.Education},#{item.Company},#{item.CTel},#{item.CAddress},#{item.CZip},#{item.Family},#{item.Version},#{item.id}
+	        )
+	    </foreach>  
+	</insert> 
+</mapper>

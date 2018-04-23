@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.procedure">
+   
+    <select id="getBarcode" parameterType="string" >
+        select * from mm_wm_barcode where barcode_id=#{id}
+    </select>
+    
+    <select id="getPurchaseTotalAmount" parameterMap="paramMap" statementType="CALLABLE">
+        call p_get_purchase_total_amount(?,?,?)
+        <!-- 
+        	create or replace procedure p_get_purchase_total_amount(beginDate varchar2,endDate varchar2,totalAmount out number) is 
+				begin 
+	  				select sum(total_amount) into totalAmount from mm_purchase where create_date between to_date(beginDate, 'yyyy-mm-dd')  and to_date(endDate, 'yyyy-mm-dd');
+				end p_get_purchase_total_amount;
+         -->
+    </select>
+    
+    <parameterMap id="paramMap" type="java.util.HashMap">    
+	    <parameter property="beginDate" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>    
+	    <parameter property="endDate" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>    
+	    <parameter property="totalAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" mode="OUT"/>    
+	</parameterMap> 
+</mapper>
